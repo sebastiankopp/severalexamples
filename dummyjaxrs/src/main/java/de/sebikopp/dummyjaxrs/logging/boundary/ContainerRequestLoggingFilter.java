@@ -45,9 +45,6 @@ public class ContainerRequestLoggingFilter implements ContainerRequestFilter{
 				
 			}
 		}
-		
-		
-		
 	}
 	
 	static byte[] extractInputStream(InputStream instr) throws IOException {

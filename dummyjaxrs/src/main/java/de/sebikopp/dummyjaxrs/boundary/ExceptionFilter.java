@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import de.sebikopp.dummyjaxrs.people.control.ClientCausedException;
 
 /**
- * Demonstrates dealing with exeptions in JAX-RS
+ * Demonstrates handling exeptions in JAX-RS
  * @author sebi
  *
  */

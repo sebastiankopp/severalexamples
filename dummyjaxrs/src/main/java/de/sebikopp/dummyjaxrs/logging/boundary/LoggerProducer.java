@@ -10,6 +10,14 @@ import org.apache.logging.log4j.Logger;
 
 public class LoggerProducer {
 	
+	/**
+	 * The selection of the logger to inject is solved using a 'classical' Java-SE based 
+	 * annotation evaluation instead of using qualifiers. This is less error-prone and a
+	 * little bit easier and maintainable (due to the usage of enums) than the build-in
+	 * CDI solution.
+	 * @param injp the {@link InjectionPoint} the logger is injected into
+	 * @return the desired {@link Logger}
+	 */
 	@Produces
 	public Logger getCustomizedLogger(final InjectionPoint injp) {
 		return Optional.ofNullable(injp.getAnnotated().getAnnotation(CustomLogger.class))

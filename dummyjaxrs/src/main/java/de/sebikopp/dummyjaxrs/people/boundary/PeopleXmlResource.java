@@ -12,6 +12,7 @@ import de.sebikopp.dummyjaxrs.boundary.ValidXml;
 
 /**
  * Am example for a JAX-RS resource with integrated XML validation.
+ * 
  * @author sebi
  *
  */
@@ -23,15 +24,15 @@ public class PeopleXmlResource {
 		return Response.noContent().build();
 	}
 	
+	/**
+	 * This endpoint method is not intended to store people!
+	 * @param xml
+	 * @return
+	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_XML)
 	public Response consume(@ValidXml(pathToSchema="xsd/people.xsd") String xml) {
 		return Response.noContent().build();
 	}
 
-	@GET
-	@Path("nogo")
-	public Response veryverybad() {
-		throw new RuntimeException("Seehr bööse");
-	}
 }

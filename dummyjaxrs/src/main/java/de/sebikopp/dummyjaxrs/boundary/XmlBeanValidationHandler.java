@@ -13,18 +13,24 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import de.sebikopp.dummyjaxrs.logging.boundary.CustomLogger;
 import de.sebikopp.dummyjaxrs.logging.boundary.LoggerName;
 
+/**
+ * Validator for XML using Bean Validation (JSR 349), e.g. in a JAX-RS context. In this example, the schema has to be included in the classpath.
+ * @author sebi
+ *
+ */
 public class XmlBeanValidationHandler implements ConstraintValidator<ValidXml, String> {
 
 	private Validator schemaValidator = null;
 
 	@Inject
 	@CustomLogger(LoggerName.VALIDATION_LOGGER)
-	private org.apache.logging.log4j.Logger validationLogger;
+	private Logger validationLogger;
 	
 	private boolean isEnabled = false;
 	

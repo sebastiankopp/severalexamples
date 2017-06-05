@@ -35,7 +35,6 @@ public class ContainerResponseLoggingFilter implements ContainerResponseFilter {
 			});
 			lggr.info("Response headers: " + hdrJsonFormatter.build());
 			if (responseContext.hasEntity() && lggr.isEnabled(Level.DEBUG)) {
-//				Type entityType = responseContext.getEntityType();
 				lggr.debug("Response entity: " + responseContext.getEntity());
 				
 			}
