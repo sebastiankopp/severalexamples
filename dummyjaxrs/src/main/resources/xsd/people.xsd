@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:simpleType name="UUIDSType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NonEmptyStringSType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"></xs:minLength>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmailSType">
+		<xs:restriction base="NonEmptyStringSType">
+			<xs:pattern value="\S+@\S+"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateSType">
+		<xs:annotation>
+			<xs:documentation>Datum im Format yyyyMMdd</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="NonEmptyStringSType">
+			<xs:pattern value="\d{4}(1[0-2]|0[1-9])(0[1-9]|[1-2][0-9]|3[0-1])"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attribute name="personId" type="UUIDSType"></xs:attribute>
+	<xs:complexType name="PersonCType">
+		<xs:sequence>
+			<xs:element name="LastName" type="NonEmptyStringSType"></xs:element>
+			<xs:element name="FirstName" type="NonEmptyStringSType"></xs:element>
+			<xs:element name="EMail" type="EmailSType" minOccurs="0"></xs:element>
+			<xs:element name="DateOfBirth" type="DateSType"></xs:element>
+		</xs:sequence>
+		<xs:attribute ref="personId" use="required"></xs:attribute>
+	</xs:complexType>
+	<xs:element name="Person" type="PersonCType"></xs:element>
+</xs:schema>

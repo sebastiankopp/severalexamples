@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Person personId="8518c16d-b0a1-43b0-bc08-41b7b7f03b73" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <LastName>LastName</LastName>
+  <FirstName>FirstName</FirstName>
+  <EMail>foobar</EMail>
+  <DateOfBirth>19850101</DateOfBirth>
+</Person>

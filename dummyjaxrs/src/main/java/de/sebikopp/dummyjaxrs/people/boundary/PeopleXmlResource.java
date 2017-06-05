@@ -1,0 +1,37 @@
+package de.sebikopp.dummyjaxrs.people.boundary;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import de.sebikopp.dummyjaxrs.boundary.ValidXml;
+
+
+/**
+ * Am example for a JAX-RS resource with integrated XML validation.
+ * @author sebi
+ *
+ */
+@Path("peoplexml")
+public class PeopleXmlResource {
+	
+	@GET
+	public Response healthCheck() {
+		return Response.noContent().build();
+	}
+	
+	@POST
+	@Consumes (MediaType.APPLICATION_XML)
+	public Response consume(@ValidXml(pathToSchema="xsd/people.xsd") String xml) {
+		return Response.noContent().build();
+	}
+
+	@GET
+	@Path("nogo")
+	public Response veryverybad() {
+		throw new RuntimeException("Seehr bööse");
+	}
+}

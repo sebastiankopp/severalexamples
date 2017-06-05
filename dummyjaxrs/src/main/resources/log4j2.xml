@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="logdir">${sys:jboss.server.log.dir}</Property>
+		<Property name="pattern">%d{yyyy-MM-dd HH:mm:ss;SSS} %p %C{10}.%M %L %m%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${pattern}" />
+		</Console>
+		<RollingFile name="RFile" fileName="${logdir}/foobar.log"
+			filePattern="${logdir}/foobar-%i.log.gz">
+			<PatternLayout>
+				<pattern>${pattern}</pattern>
+			</PatternLayout>
+			<SizeBasedTriggeringPolicy size="20 MB" />
+		</RollingFile>
+		<RollingFile name="validatAppender" fileName="${logdir}/validatMsgs.log"
+			filePattern="${logdir}/validatMsgs-%i.log.gz">
+			<PatternLayout>
+				<pattern>${pattern}</pattern>
+			</PatternLayout>
+			<SizeBasedTriggeringPolicy size="100 kB"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="defaultLogger" level="debug" additivity="false">
+			<AppenderRef ref="RFile" />
+		</Logger>
+		<Logger name="validationLogger" level="debug" additivity="false">
+			<AppenderRef ref="validatAppender"></AppenderRef>
+		</Logger>
+		<Root level="error">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>
