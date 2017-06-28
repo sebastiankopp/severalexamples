@@ -2,7 +2,8 @@ package de.sebikopp.dummyjaxrs.logging.boundary;
 
 public enum LoggerName {
 	VALIDATION_LOGGER("validationLogger"),
-	DEFAULT_LOGGER("defaultLogger");
+	DEFAULT_LOGGER("defaultLogger"),
+	EXTERNAL_RES_LGGR("extResLogger");
 	
 	private final String loggerName;
 	

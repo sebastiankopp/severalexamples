@@ -27,6 +27,9 @@
 		<Logger name="defaultLogger" level="debug" additivity="false">
 			<AppenderRef ref="RFile" />
 		</Logger>
+		<Logger name="extResLogger" level="info" additivity="false">
+			<AppenderRef ref="Console" />
+		</Logger>
 		<Logger name="validationLogger" level="debug" additivity="false">
 			<AppenderRef ref="validatAppender"></AppenderRef>
 		</Logger>
