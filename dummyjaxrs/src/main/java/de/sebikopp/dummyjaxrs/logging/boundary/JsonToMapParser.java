@@ -17,7 +17,7 @@ import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
 
 public class JsonToMapParser {
-
+	
 	public static Map<String,Object> fromJsonString(String json) {
 		JsonReader jsonReader = Json.createReader(new StringReader(json));
 		JsonStructure rootStructure = jsonReader.read();
