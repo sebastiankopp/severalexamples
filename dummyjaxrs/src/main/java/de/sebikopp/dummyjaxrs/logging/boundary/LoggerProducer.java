@@ -20,7 +20,9 @@ public class LoggerProducer {
 	 */
 	@Produces
 	public Logger getCustomizedLogger(final InjectionPoint injp) {
-		return Optional.ofNullable(injp.getAnnotated().getAnnotation(CustomLogger.class))
+		return Optional.ofNullable(injp)
+				.map(InjectionPoint::getAnnotated)
+				.map(x -> x.getAnnotation(CustomLogger.class))
 				.map(CustomLogger::value)
 				.map(LoggerName::getLoggerName)
 				.map(LogManager::getLogger)
