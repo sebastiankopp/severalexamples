@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ImageList>
+	<Image fileType="JPEG" id="b1">
+		<Content>
+			<xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include"
+				href="urn:uuid:98103afc-0dfd-41eb-a8f8-f3c9c2698a06" />
+		</Content>
+		<Metadata />
+	</Image>
+	<Image fileType="PNG" id="b2">
+		<Content>
+			<xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include"
+				href="urn:uuid:caa1b202-5475-456a-8410-f6a5dc42fd08" />
+		</Content>
+		<Metadata />
+	</Image>
+</ImageList>
