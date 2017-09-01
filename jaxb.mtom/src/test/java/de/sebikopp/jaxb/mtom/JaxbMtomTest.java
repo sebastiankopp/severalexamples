@@ -1,12 +1,17 @@
 package de.sebikopp.jaxb.mtom;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
-
 import javax.activation.DataHandler;
 import javax.xml.bind.JAXBElement;
+import javax.xml.validation.Schema;
+
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.xml.sax.SAXParseException;
 
 import de.sebikopp.jaxb.mtom.test.stubs.ImgListCType;
@@ -16,40 +21,86 @@ import de.sebikopp.jaxb.mtom.test.stubs.ObjectFactory;
 import de.sebikopp.jaxb.mtom.test.stubs.SupportedImgFiletypeSType;
 
 public class JaxbMtomTest {
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
+	
+	@Before
+	public void init() {
+		Locale.setDefault(Locale.ENGLISH);
+	}
+	
 	@Test
 	public void test1() throws Exception {
 		ObjectFactory of = new ObjectFactory();
 		ImgListCType lst = createTestData();
 		JAXBElement<ImgListCType> imageList = of.createImageList(lst);
 		JaxbMtomConverter jaxbMtomConverter = new JaxbMtomConverter();
-		final Optional<String> optP2schema = Optional.of("xsd/imagesWithMetainfos.xsd");
-		JaxbMtomContainer container = jaxbMtomConverter.encodeDataFromJaxbElem(imageList, optP2schema);
+		final Optional<Schema> optSchema = Optional.of("xsd/imagesWithMetainfos.xsd")
+				.map(MtomValidator::schemaFromCpPath);
+		JaxbMtomContainer container = jaxbMtomConverter.encodeDataFromJaxbElem(imageList, optSchema);
 		System.out.println(container);
-		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optP2schema);
+		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optSchema);
 	}
-	@Test(expected=SAXParseException.class)
+	@Test
 	public void testInvalid() throws Exception {
+		expectedEx.expect(CustomExceptionMatcher.of(".*length.*0.*not.*valid.*", SAXParseException.class));
 		ObjectFactory of = new ObjectFactory();
 		ImgListCType lst = createTestData();
 		lst.getImage().get(0).setId("");
 		JAXBElement<ImgListCType> imageList = of.createImageList(lst);
 		JaxbMtomConverter jaxbMtomConverter = new JaxbMtomConverter();
-		final Optional<String> optP2schema = Optional.of("xsd/imagesWithMetainfos.xsd");
-		JaxbMtomContainer container = jaxbMtomConverter.encodeDataFromJaxbElem(imageList, optP2schema);
-		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optP2schema);
+		final Optional<Schema> optSchema = Optional.of("xsd/imagesWithMetainfos.xsd").map(MtomValidator::schemaFromCpPath);
+		JaxbMtomContainer container = jaxbMtomConverter.encodeDataFromJaxbElem(imageList, optSchema);
+		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optSchema);
 	}
-	@Test(expected=SAXParseException.class)
+	@Test
+	public void testInvalidWithoutValidation() throws Exception {
+		ObjectFactory of = new ObjectFactory();
+		ImgListCType lst = createTestData();
+		lst.getImage().get(0).setId("");
+		JAXBElement<ImgListCType> imageList = of.createImageList(lst);
+		JaxbMtomConverter jaxbMtomConverter = new JaxbMtomConverter();
+		final Optional<Schema> optSchema = Optional.empty();
+		JaxbMtomContainer container = jaxbMtomConverter.encodeDataFromJaxbElem(imageList, optSchema);
+		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optSchema);
+	}
+	@Test
 	public void testUmarshInvalid() throws Exception {
+		expectedEx.expect(CustomExceptionMatcher.of(".*length.*0.*not.*valid.*", SAXParseException.class));
 		ObjectFactory of = new ObjectFactory();
 		ImgListCType lst = createTestData();
 		lst.getImage().get(0).setId("");
 		JAXBElement<ImgListCType> imageList = of.createImageList(lst);
 		JaxbMtomConverter jaxbMtomConverter = new JaxbMtomConverter();
-		final Optional<String> optP2schema = Optional.of("xsd/imagesWithMetainfos.xsd");
+		final Optional<Schema> optSchema = Optional.of("xsd/imagesWithMetainfos.xsd")
+				.map(MtomValidator::schemaFromCpPath);
 		JaxbMtomContainer container = jaxbMtomConverter.encodeDataFromJaxbElem(imageList, Optional.empty());
-		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optP2schema);
+		System.out.println("Marshalling succeessful without additional JAXB source validation");
+		jaxbMtomConverter.unmarshal(container, ImgListCType.class, optSchema);
 	}
-	
+	@Test
+	public void testUniqueWOValidation() throws Exception {
+		ObjectFactory of = new ObjectFactory();
+		ImgListCType lst = createTestData();
+		lst.getImage().forEach(x -> x.setId("IDID"));
+		JAXBElement<ImgListCType> imageList = of.createImageList(lst);
+		JaxbMtomConverter converter = new JaxbMtomConverter();
+		JaxbMtomContainer container = converter.encodeDataFromJaxbElem(imageList, Optional.empty());
+		converter.unmarshal(container, ImgListCType.class, Optional.empty());
+	}
+	@Test 
+	public void testUniqueWithValidation() throws Exception {
+		expectedEx.expect(CustomExceptionMatcher.of(".*duplicate unique value.*", SAXParseException.class));
+		final Optional<Schema> schema = Optional.of("xsd/imagesWithMetainfos.xsd")
+				.map(MtomValidator::schemaFromCpPath);
+		ObjectFactory of = new ObjectFactory();
+		ImgListCType lst = createTestData();
+		lst.getImage().forEach(x -> x.setId("IDID"));
+		JAXBElement<ImgListCType> imageList = of.createImageList(lst);
+		JaxbMtomConverter converter = new JaxbMtomConverter();
+		JaxbMtomContainer container = converter.encodeDataFromJaxbElem(imageList, schema);
+		converter.unmarshal(container, ImgListCType.class, schema);
+	}
 	private ImgListCType createTestData() {
 		final byte[] img1 = createRandomData(4096);
 		final byte[] img2 = createRandomData(54545);
@@ -73,4 +124,5 @@ public class JaxbMtomTest {
 		new Random().nextBytes(rc);
 		return rc;
 	}
+
 }

@@ -12,22 +12,28 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.validation.Schema;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 public class JaxbMtomConverter {
-	private final ConcurrentHashMap<Class<?>, JAXBContext> ctx =  new ConcurrentHashMap<>();
-	public <T> JaxbMtomContainer encodeDataFromXmlRootObj(T input, Class<T> rootClass) throws JAXBException, ParserConfigurationException {
+	private static final ConcurrentHashMap<Class<?>, JAXBContext> ctx =  new ConcurrentHashMap<>();
+	public <T> JaxbMtomContainer encodeDataFromXmlRootObj(T input, Class<T> rootClass, Optional<Schema> schema)
+			throws JAXBException, ParserConfigurationException, SAXException, IOException {
+		final JAXBContext jaxbCtx = getJaxbCtx(rootClass);
+		if (schema.isPresent()) {
+			new MtomValidator<>(jaxbCtx, schema.get()).validate(input);
+		}
 		return marshal(input, getJaxbCtx(rootClass));
 	}
 	
-	public <T> JaxbMtomContainer encodeDataFromJaxbElem(JAXBElement<T> data, Optional<String> p2schema)
+	public <T> JaxbMtomContainer encodeDataFromJaxbElem(JAXBElement<T> data, Optional<Schema> schema)
 			throws JAXBException, ParserConfigurationException, SAXException, IOException {
 		Class<T> declaredType = data.getDeclaredType();
 		final JAXBContext jaxbCtx = getJaxbCtx(declaredType);
-		if (p2schema.isPresent()) {
-			new MtomValidator<>(jaxbCtx, p2schema.get()).validate(data);
+		if (schema.isPresent()) {
+			new MtomValidator<>(jaxbCtx, schema.get()).validate(data);
 		}
 		return marshal(data, jaxbCtx);
 	}
@@ -42,13 +48,13 @@ public class JaxbMtomConverter {
 		return new JaxbMtomContainer(doc.getDocumentElement(), containedData);
 	}
 	
-	public <T> T unmarshal(JaxbMtomContainer container, Class<T> clazz, Optional<String> p2schema) throws JAXBException, SAXException, IOException {
+	public <T> T unmarshal(JaxbMtomContainer container, Class<T> clazz, Optional<Schema> schema) throws JAXBException, SAXException, IOException {
 		final JAXBContext jaxbCtx = getJaxbCtx(clazz);
 		Unmarshaller unmarshaller = jaxbCtx.createUnmarshaller();
 		unmarshaller.setAttachmentUnmarshaller(new MtomAttachmentUnmarshaller(container));
 		JAXBElement<T> unmarshalledElement = unmarshaller.unmarshal(container.getXmlTree(), clazz);
-		if (p2schema.isPresent()) {
-			new MtomValidator<>(jaxbCtx, p2schema.get()).validate(unmarshalledElement);
+		if (schema.isPresent()) {
+			new MtomValidator<>(jaxbCtx, schema.get()).validate(unmarshalledElement);
 		}
 		return unmarshalledElement.getValue();
 	}
