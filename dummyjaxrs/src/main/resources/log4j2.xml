@@ -9,11 +9,15 @@
 			<PatternLayout pattern="${pattern}" />
 		</Console>
 		<RollingFile name="RFile" fileName="${logdir}/foobar.log"
-			filePattern="${logdir}/foobar-%i.log.gz">
+			filePattern="${logdir}/foobar-%d{MM-dd-yyyy}-%i.log.gz">
 			<PatternLayout>
 				<pattern>${pattern}</pattern>
 			</PatternLayout>
-			<SizeBasedTriggeringPolicy size="20 MB" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="20 MB" />
+				<CronTriggeringPolicy schedule="0 10 * * * ?" evaluateOnStartup="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="20"/>
 		</RollingFile>
 		<RollingFile name="validatAppender" fileName="${logdir}/validatMsgs.log"
 			filePattern="${logdir}/validatMsgs-%i.log.gz">
