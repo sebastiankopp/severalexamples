@@ -13,7 +13,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class JaxbMtomContainer {
+public final class JaxbMtomContainer {
 	private final Element xmlTree;
 	private final Map<String,byte[]> attachments;
 	public JaxbMtomContainer(Element xmlTree, Map<String, byte[]> attachments) {
