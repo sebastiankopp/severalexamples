@@ -56,13 +56,60 @@
 			<artifactId>mongo-java-driver</artifactId>
 			<version>3.4.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.airhacks</groupId>
+			<artifactId>porcupine</artifactId>
+			<version>0.0.4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>dummyjaxrs</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.20.1</version>
+				<executions>
+					<execution>
+						<id>run-integTest</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<parallel>methods</parallel>
+					<threadCount>10</threadCount>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.2.1.Final</version>
+				<executions>
+					<execution>
+						<id>deploy-war</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
 	</build>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
+	<scm>
+		<connection>scm:git:git@github.com/sebikopp/severalexamples.git</connection>
+		<developerConnection>scm:git:git@github.com/sebikopp/severalexamples.git</developerConnection>
+		<url>scm:git:git@github.com/sebikopp/severalexamples.git</url>
+		<tag>HEAD</tag>
+	</scm>
 </project>
