@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sebikopp</groupId>
 	<artifactId>dummyjaxrs</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
@@ -133,5 +133,6 @@
 		<connection>scm:git:https://github.com/sebikopp/severalexamples.git</connection>
 		<developerConnection>scm:git:https://github.com/sebikopp/severalexamples.git</developerConnection>
 		<url>scm:git:https://github.com/sebikopp/severalexamples.git</url>
+		<tag>dummyjaxrs-0.0.1</tag>
 	</scm>
 </project>

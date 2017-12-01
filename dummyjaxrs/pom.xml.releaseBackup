@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sebikopp</groupId>
 	<artifactId>dummyjaxrs</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
@@ -130,8 +131,9 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 	<scm>
-		<connection>scm:git:https://github.com/sebikopp/severalexamples.git</connection>
-		<developerConnection>scm:git:https://github.com/sebikopp/severalexamples.git</developerConnection>
-		<url>scm:git:https://github.com/sebikopp/severalexamples.git</url>
+		<connection>scm:git:git@github.com/sebikopp/severalexamples.git</connection>
+		<developerConnection>scm:git:git@github.com/sebikopp/severalexamples.git</developerConnection>
+		<url>scm:git:git@github.com/sebikopp/severalexamples.git</url>
+		<tag>HEAD</tag>
 	</scm>
 </project>

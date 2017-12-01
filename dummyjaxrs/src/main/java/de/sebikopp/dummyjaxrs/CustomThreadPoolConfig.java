@@ -16,8 +16,8 @@ public class CustomThreadPoolConfig extends ExecutorConfigurator {
 			return new ExecutorConfiguration.Builder()
 					.corePoolSize(2)
 					.maxPoolSize(4)
-					.discardPolicy()
-					.queueCapacity(200)
+					.abortPolicy()
+					.queueCapacity(50)
 				.build();
 				
 		}

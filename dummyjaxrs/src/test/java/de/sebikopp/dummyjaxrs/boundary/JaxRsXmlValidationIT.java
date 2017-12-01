@@ -16,7 +16,7 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class IntegrationTestJaxRsXmlValidationIT {
+public class JaxRsXmlValidationIT {
 
 	private final String host = "localhost";
 	private final int port = 8080;
@@ -62,7 +62,7 @@ public class IntegrationTestJaxRsXmlValidationIT {
 		return Entity.entity(xml, MediaType.APPLICATION_XML);
 	}
 	private String loadXml(String p2Resource) {
-		ClassLoader cl = IntegrationTestJaxRsXmlValidationIT.class.getClassLoader();
+		ClassLoader cl = JaxRsXmlValidationIT.class.getClassLoader();
 		InputStream input = cl.getResourceAsStream(p2Resource);
 		try (final BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
             return buffer.lines().collect(Collectors.joining(System.lineSeparator()));

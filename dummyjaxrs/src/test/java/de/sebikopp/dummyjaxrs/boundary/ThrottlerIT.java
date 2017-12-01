@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
-
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import org.hamcrest.Matchers;
@@ -14,17 +13,21 @@ import org.junit.Test;
 
 public class ThrottlerIT {
 	
+	private static final String URI_OVERLOAD_RES = "http://localhost:8080/dummyjaxrs/resources/thrdummy";
+//	private static final String URI_STATS_RES = "http://localhost:8080/dummyjaxrs/resources/statistics";
+
 	@Test
 	public void test() throws Exception {
-		WebTarget target = createTarget();
+		WebTarget target = createTarget(URI_OVERLOAD_RES);
 		int count = 40;
 		final int poolSize = 4;
 		int minDuration = count/poolSize;
 		
 		List<Future<String>> futures = new ArrayList<>();
 		
-		for (int i = 0; i < 40; i++)
+		for (int i = 0; i < count; i++) {
 			futures.add(target.request().async().get(String.class));
+		}
 		Instant registeredStart = Instant.now();
 		for (Future<String>  future: futures) {
 			future.get();
@@ -34,9 +37,9 @@ public class ThrottlerIT {
 		Assert.assertThat(processingTime, Matchers.greaterThanOrEqualTo(Duration.ofSeconds(minDuration)));
 	}
 
-	private WebTarget createTarget() {
+	private WebTarget createTarget(String uri) {
 		WebTarget target = ClientBuilder.newClient()
-				.target("http://localhost:8080/dummyjaxrs/resources/thrdummy");
+				.target(uri);
 		return target;
 	}
 	
