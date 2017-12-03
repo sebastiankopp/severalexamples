@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice"
+	xmlns:cc="http://sebikopp.de/bootysoap/crosscuttingTypes"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="DigestWebservice" targetNamespace="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice">
+			<xsd:include schemaLocation="./types.xsd"></xsd:include>
+			<xsd:import namespace="http://sebikopp.de/bootysoap/crosscuttingTypes" schemaLocation="./crosscuttingTypes.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetDigestRequestMsg">
+		<wsdl:part name="header1" element="cc:CallID"></wsdl:part>
+		<wsdl:part element="tns:CreateDigestRequest" name="body" />
+	</wsdl:message>
+	<wsdl:message name="GetDigestResponseMsg">
+		<wsdl:part element="tns:CreateDigestResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="CustomFault">
+		<wsdl:part name="faultContent" element="cc:FaultContent"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="PushPayloadRequestMsg">
+		<wsdl:part name="hdx" element="cc:CallID"></wsdl:part>
+		<wsdl:part name="body" element="tns:PushPayloadRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="DigestWebservice">
+		<wsdl:operation name="GetDigest">
+			<wsdl:input message="tns:GetDigestRequestMsg" />
+			<wsdl:output message="tns:GetDigestResponseMsg" />
+			<wsdl:fault name="GetDigestException" message="tns:CustomFault"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PushPayload">
+			<wsdl:input message="tns:PushPayloadRequestMsg"></wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DigestWebserviceSOAP" type="tns:DigestWebservice">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GetDigest">
+			<soap:operation
+				soapAction="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice/GetDigest" />
+			<wsdl:input>
+				<soap:header use="literal" part="header1" message="tns:GetDigestRequestMsg"></soap:header>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="PushPayload">
+			<soap:operation soapAction="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice/PushPayload"/>
+			<wsdl:input>
+				<soap:header use="literal" part="hdx" message="tns:PushPayloadRequestMsg"></soap:header>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DigestWebservice">
+		<wsdl:port binding="tns:DigestWebserviceSOAP" name="DigestWebserviceSOAP">
+			<soap:address location="http://dummydummydummy:9999/notset" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
