@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.validation.constraints.NotNull;
 import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -38,14 +39,14 @@ public class PeopleResource {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public JsonObject getPerson(@PathParam("id") String id) {
-		return PeopleConverter.personToJson(store.getPerson(uuidFromClientRequest(id)));
+	public JsonObject getPerson(@PathParam("id") @NotNull String id) {
+		return PeopleConverter.personToJson(store.getPerson(uuidFromClientRequest(id.trim())));
 	}
 
 	@DELETE
 	@Path("{id}")
-	public Response deletePerson(@PathParam("id") String id) {
-		UUID pid = uuidFromClientRequest(id);
+	public Response deletePerson(@PathParam("id") @NotNull String id) {
+		UUID pid = uuidFromClientRequest(id.trim());
 		store.deletePerson(pid);
 		return Response.noContent().build();
 	}

@@ -10,11 +10,13 @@ import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import de.sebikopp.dummyjaxrs.logging.boundary.Logged;
 import de.sebikopp.dummyjaxrs.people.entity.Person;
 
 @Singleton
 @Startup
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
+@Logged
 public class PeopleStore {
 	private final ConcurrentMap<UUID,Person> people = new ConcurrentHashMap<>(); 
 

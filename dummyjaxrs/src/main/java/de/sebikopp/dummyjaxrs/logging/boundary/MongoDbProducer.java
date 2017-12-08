@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
+@Logged
 public class MongoDbProducer {
 	@Inject
 	MongoClient clnt;
