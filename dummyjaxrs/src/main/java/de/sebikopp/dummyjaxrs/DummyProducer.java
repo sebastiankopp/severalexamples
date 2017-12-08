@@ -1,8 +1,6 @@
 package de.sebikopp.dummyjaxrs;
 
 import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -12,7 +10,6 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.GET;
@@ -22,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.mongodb.MongoClient;
 
+import de.sebikopp.dummyjaxrs.boundary.JsonCollectors;
 import de.sebikopp.dummyjaxrs.people.control.PeopleStore;
 
 @Path("bla")
@@ -32,14 +30,7 @@ public class DummyProducer {
 		return Stream.generate(UUID::randomUUID)
 				.limit(25L)
 				.map(Object::toString)
-				.collect(Collectors.collectingAndThen(
-						Collector.of(Json::createArrayBuilder,
-								JsonArrayBuilder::add,
-								(JsonArrayBuilder left, JsonArrayBuilder right) ->  {
-									left.add(right);
-									return left;
-								}),
-						JsonArrayBuilder::build));
+				.collect(JsonCollectors.collectStrings());
 	}
 	@GET
 	@Path("specifi")
@@ -58,7 +49,7 @@ public class DummyProducer {
 		PeopleStore peopleStore = currentCdi.select(PeopleStore.class).get();
 		logger.info("+++++++ PEOPLE +++++++");
 		peopleStore.getAll().stream()
-				.forEach(x -> logger.info("Perseon: {}", x.getLastName()));
+				.forEach(x -> logger.info("Person: {}", x.getLastName()));
 		return resBui.build();
 	}
 }
