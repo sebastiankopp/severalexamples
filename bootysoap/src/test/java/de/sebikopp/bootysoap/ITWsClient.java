@@ -1,4 +1,4 @@
-package bootysoap;
+package de.sebikopp.bootysoap;
 
 import java.net.MalformedURLException;
 import java.net.URL;
