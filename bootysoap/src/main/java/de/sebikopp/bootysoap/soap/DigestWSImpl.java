@@ -51,7 +51,6 @@ public class DigestWSImpl implements DigestWebservice{
 
 	@Override
 	public void pushPayload(CallID hdx, PushPayloadRequest body) {
-		// TODO Auto-generated metho stub
 		try {
 			logger.debug("Starting to sleep ...");
 			TimeUnit.SECONDS.sleep(42);
