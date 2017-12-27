@@ -2,8 +2,6 @@ package de.sebikopp.dummyjaxrs.logging.boundary;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 
 import org.hamcrest.Matchers;
@@ -15,7 +13,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,8 +20,7 @@ import de.sebikopp.dummyjaxrs.control.SlowService;
 import de.sebikopp.dummyjaxrs.test.logging.TestScopeAppender;
 
 @RunWith(Arquillian.class)
-@FixMethodOrder
-public class InterceptionIT {
+public class InterceptionTest {
 	
 	@Inject
 	SlowService slowService;
@@ -33,7 +29,7 @@ public class InterceptionIT {
 	
 	@Before
 	public void before() throws IOException {
-		appender = TestScopeAppender.byName("TScopeGlob").orElse(null);
+		appender = TestScopeAppender.byName("TScope").orElse(null);
 		if (appender != null)  {
 			appender.clear();
 		} else {
@@ -43,7 +39,7 @@ public class InterceptionIT {
 	
 	@Deployment
 	public static JavaArchive createArchive() {
-		InputStream beansXml = InterceptionIT.class.getClassLoader().getResourceAsStream("beans.xml");
+		InputStream beansXml = InterceptionTest.class.getClassLoader().getResourceAsStream("beans.xml");
 		return ShrinkWrap.create(JavaArchive.class)
 				.addClasses(SlowService.class, Logged.class, CustomLoggerInterceptor.class)
 				.addAsManifestResource(new ByteArrayAsset(beansXml), "beans.xml");
@@ -53,7 +49,6 @@ public class InterceptionIT {
 	public void t1() throws IOException, InterruptedException {
 		int siz1 = appender.getEvents().size();
 		slowService.giveMeSomeRandom();
-		TimeUnit.SECONDS.sleep(1);
 		int siz2 = appender.getEvents().size();
 		Assert.assertThat(siz2, Matchers.greaterThan(siz1));
 	}
