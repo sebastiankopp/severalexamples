@@ -19,7 +19,7 @@ public class ThrottlerIT {
 	@Test
 	public void test() throws Exception {
 		WebTarget target = createTarget(URI_OVERLOAD_RES);
-		int count = 40;
+		int count = 12;
 		final int poolSize = 4;
 		int minDuration = count/poolSize;
 		

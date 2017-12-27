@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="WARN" packages="de.sebikopp.dummyjaxrs.test.logging">
 	<Properties>
 		<Property name="logdir">target/test-logs</Property>
 		<Property name="pattern">%d{yyyy-MM-dd HH:mm:ss;SSS} %p %C{10}.%M %L %m%n</Property>
@@ -8,6 +8,8 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="${pattern}" />
 		</Console>
+		<TestScope name="TScope" />
+		<TestScope name="TScopeGlob" globalAccess="true" />
 		<RollingFile name="RFile" fileName="${logdir}/foobar.log"
 			filePattern="${logdir}/foobar-%d{MM-dd-yyyy}-%i.log.gz">
 			<PatternLayout>
@@ -30,9 +32,13 @@
 	<Loggers>
 		<Logger name="defaultLogger" level="debug" additivity="false">
 			<AppenderRef ref="RFile" />
+			<AppenderRef ref="TScope" />
+			<AppenderRef ref="TScopeGlob" />
 		</Logger>
 		<Logger name="extResLogger" level="info" additivity="false">
 			<AppenderRef ref="Console" />
+			<AppenderRef ref="TScope" />
+			<AppenderRef ref="TScopeGlob" />
 		</Logger>
 		<Logger name="validationLogger" level="debug" additivity="false">
 			<AppenderRef ref="validatAppender"></AppenderRef>
