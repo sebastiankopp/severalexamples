@@ -1,15 +1,16 @@
 package de.sebikopp.dummyjaxrs.logging.boundary;
 
 import java.io.IOException;
-import java.io.InputStream;
 import javax.inject.Inject;
 
 import org.hamcrest.Matchers;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.descriptor.api.Descriptors;
+import org.jboss.shrinkwrap.descriptor.api.beans11.BeansDescriptor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,10 +40,13 @@ public class InterceptionTest {
 	
 	@Deployment
 	public static JavaArchive createArchive() {
-		InputStream beansXml = InterceptionTest.class.getClassLoader().getResourceAsStream("beans.xml");
+		String beansXml = Descriptors.create(BeansDescriptor.class)
+				.beanDiscoveryMode("all")
+				.exportAsString();
+		System.out.println("beans.xml: " + beansXml);
 		return ShrinkWrap.create(JavaArchive.class)
 				.addClasses(SlowService.class, Logged.class, CustomLoggerInterceptor.class)
-				.addAsManifestResource(new ByteArrayAsset(beansXml), "beans.xml");
+				.addAsManifestResource(new StringAsset(beansXml), "beans.xml");
 	}
 	
 	@Test
@@ -57,7 +61,4 @@ public class InterceptionTest {
 	public void clearAll() throws IOException {
 		appender.clear();
 	}
-	
-	
-
 }
