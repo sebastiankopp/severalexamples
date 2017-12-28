@@ -125,7 +125,7 @@
 							<goal>verify</goal>
 						</goals>
 						<configuration>
-							<skip>true</skip>
+							<skip>false</skip>
 						</configuration>
 					</execution>
 				</executions>
@@ -140,23 +140,22 @@
 							<goal>repackage</goal>
 						</goals>
 					</execution>
-					<!-- 
 					<execution>
-						<id>boot-integration-test</id>
+						<id>start-boot</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>start</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>after-integration-test</id>
+						<id>stop-boot</id>
 						<phase>post-integration-test</phase>
 						<goals>
 							<goal>stop</goal>
 						</goals>
 					</execution>
-					-->
 				</executions>
+				<configuration />
 			</plugin>
 		</plugins>
 	</build>

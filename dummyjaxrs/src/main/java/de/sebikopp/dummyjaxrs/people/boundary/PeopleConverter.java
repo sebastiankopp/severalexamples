@@ -11,10 +11,10 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.JsonValue;
+import javax.ws.rs.BadRequestException;
 
 import de.sebikopp.dummyjaxrs.ConstantValues;
 import de.sebikopp.dummyjaxrs.boundary.JsonCollectors;
-import de.sebikopp.dummyjaxrs.people.control.ClientCausedException;
 import de.sebikopp.dummyjaxrs.people.entity.Person;
 
 class PeopleConverter {
@@ -41,22 +41,22 @@ class PeopleConverter {
 	static Person personFromJson(JsonObject obj) {
 		String id = obj.getString(JSON_KEY_ID, null);
 		if (!obj.containsKey(JSON_KEY_FIRST_NAME)) {
-			throw new ClientCausedException("First name is missing");
+			throw new BadRequestException("First name is missing");
 		}
 		String fName = obj.getString(JSON_KEY_FIRST_NAME);
 		if (!obj.containsKey(JSON_KEY_LAST_NAME)) {
-			throw new ClientCausedException("Last name is missing");
+			throw new BadRequestException("Last name is missing");
 		}
 		String lName = obj.getString(JSON_KEY_LAST_NAME);
 		if (!obj.containsKey(JSON_KEY_DATE_OF_BIRTH)) {
-			throw new ClientCausedException("Date of birth is missing");
+			throw new BadRequestException("Date of birth is missing");
 		}
 		String bday = obj.getString(JSON_KEY_DATE_OF_BIRTH);
 		LocalDate bdayDate = null;
 		try {
 			bdayDate = LocalDate.parse(bday, ConstantValues.COMMON_DATE_FORMAT);
 		} catch (Exception e1) {
-			throw new ClientCausedException(e1);
+			throw new BadRequestException(e1);
 		}
 		
 		Set<String> eMails = Collections.emptySet();

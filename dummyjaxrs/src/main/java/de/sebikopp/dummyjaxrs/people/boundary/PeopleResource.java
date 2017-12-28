@@ -7,6 +7,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.validation.constraints.NotNull;
 import javax.websocket.server.PathParam;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,7 +19,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import de.sebikopp.dummyjaxrs.boundary.JsonCollectors;
-import de.sebikopp.dummyjaxrs.people.control.ClientCausedException;
 import de.sebikopp.dummyjaxrs.people.control.PeopleStore;
 import de.sebikopp.dummyjaxrs.people.entity.Person;
 
@@ -67,7 +67,7 @@ public class PeopleResource {
 		try {
 			return UUID.fromString(id);
 		} catch (Exception e) {
-			throw new ClientCausedException(e);
+			throw new BadRequestException(e);
 		}
 	}
 }
