@@ -5,7 +5,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.UUID;
-
 import javax.xml.ws.BindingProvider;
 
 import org.junit.Assert;
@@ -15,6 +14,7 @@ import org.junit.Test;
 import de.sebikopp.bootysoap.crosscuttingtypes.CallID;
 import de.sebikopp.bootysoap.wsdlx.digestwebservice.CreateDigestRequest;
 import de.sebikopp.bootysoap.wsdlx.digestwebservice.CreateDigestResponse;
+import de.sebikopp.bootysoap.wsdlx.digestwebservice.CustomFault;
 import de.sebikopp.bootysoap.wsdlx.digestwebservice.DigestWebservice;
 import de.sebikopp.bootysoap.wsdlx.digestwebservice.DigestWebservice_Service;
 import de.sebikopp.bootysoap.wsdlx.digestwebservice.PushPayloadRequest;
@@ -36,11 +36,16 @@ public class ITWsClient {
 		CreateDigestRequest body = new CreateDigestRequest();
 		final String algorithm = "SHA-256";
 		body.setAlgorithm(algorithm);
-		final byte[] payload = "Hallo Welt".getBytes(StandardCharsets.UTF_8);
+		final byte[] payload = generatePayload();
 		body.setPayload(payload);
 		CreateDigestResponse digestResponse = proxy.getDigest(getCallId(), body);
 		byte[] correctDigest = MessageDigest.getInstance(algorithm).digest(payload);	
 		Assert.assertArrayEquals(correctDigest, digestResponse.getPayloadDigest());
+	}
+
+	private byte[] generatePayload() {
+		final byte[] payload = "Hallo Welt".getBytes(StandardCharsets.UTF_8);
+		return payload;
 	}
 	
 	@Test(timeout=2_500)
@@ -49,6 +54,15 @@ public class ITWsClient {
 		proxy.pushPayload(getCallId(), pushPayloadRequest);
 	}
 
+	@Test(expected=CustomFault.class)
+	public void testFault() throws Exception {
+		CreateDigestRequest request = new CreateDigestRequest();
+		final String algorithm = "FOO-256";
+		request.setAlgorithm(algorithm);
+		request.setPayload(generatePayload());
+		proxy.getDigest(getCallId(), request);
+	}
+	
 	private CallID getCallId() {
 		CallID callId = new CallID();
 		callId.setMustUnderstand(Boolean.TRUE);
