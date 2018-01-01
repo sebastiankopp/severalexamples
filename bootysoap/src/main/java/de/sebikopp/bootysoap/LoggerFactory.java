@@ -13,4 +13,8 @@ public class LoggerFactory {
 	public Logger getDefaultLogger() {
 		return LogManager.getLogger(LOGGER_NAME);
 	}
+
+	public static Logger __getDefaultLogger() {
+		return LogManager.getLogger(LOGGER_NAME);
+	}
 }

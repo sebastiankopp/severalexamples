@@ -18,6 +18,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.getProperties().forEach((k,v) -> System.out.println(k+ ": " + v));
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		// Uncomment the line below for testing logging
+//		org.apache.logging.log4j.core.config.Configurator.setRootLevel(org.apache.logging.log4j.Level.TRACE);
 	}
 
-} // class
+} 

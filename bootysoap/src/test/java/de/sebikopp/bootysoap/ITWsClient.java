@@ -33,13 +33,12 @@ public class ITWsClient {
 	
 	@Test
 	public void test1() throws Exception {
-		CallID callId = getCallId();
 		CreateDigestRequest body = new CreateDigestRequest();
 		final String algorithm = "SHA-256";
 		body.setAlgorithm(algorithm);
 		final byte[] payload = "Hallo Welt".getBytes(StandardCharsets.UTF_8);
 		body.setPayload(payload);
-		CreateDigestResponse digestResponse = proxy.getDigest(callId, body);
+		CreateDigestResponse digestResponse = proxy.getDigest(getCallId(), body);
 		byte[] correctDigest = MessageDigest.getInstance(algorithm).digest(payload);	
 		Assert.assertArrayEquals(correctDigest, digestResponse.getPayloadDigest());
 	}
@@ -52,7 +51,7 @@ public class ITWsClient {
 
 	private CallID getCallId() {
 		CallID callId = new CallID();
-		callId.setMustUnderstand(true);
+		callId.setMustUnderstand(Boolean.TRUE);
 		callId.setValue(UUID.randomUUID().toString());
 		return callId;
 	}

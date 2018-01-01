@@ -39,6 +39,11 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-features-logging</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
@@ -90,8 +95,9 @@
 								<wsdlOption>
 									<wsdl>${basedir}/src/main/resources/wsdl/DigestWebservice.wsdl</wsdl>
 									<extraargs>
-									<!-- May not be placed at the config for the whole plugin in this project, this might lead to two default
-									and two full-value-construvtors per class which results in a compiler error. -->
+										<!-- May not be placed at the config for the whole plugin in this 
+											project, this might lead to two default and two full-value-construvtors per 
+											class which results in a compiler error. -->
 										<extraarg>-xjc-Xvalue-constructor</extraarg>
 									</extraargs>
 								</wsdlOption>
