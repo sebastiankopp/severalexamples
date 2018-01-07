@@ -1,5 +1,6 @@
 package de.sebikopp.dummyjaxrs.boundary;
 
+import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.sebikopp.dummyjaxrs.RegexMatchers;
+import de.sebikopp.dummyjaxrs.control.SlowService;
+
 public class ThrottlerIT {
 	
 	private static final String URI_OVERLOAD_RES = "http://localhost:8080/dummyjaxrs/resources/thrdummy";
@@ -21,7 +25,7 @@ public class ThrottlerIT {
 		WebTarget target = createTarget(URI_OVERLOAD_RES);
 		int count = 12;
 		final int poolSize = 4;
-		int minDuration = count/poolSize;
+		final Duration minDuration = Duration.ofSeconds((count/poolSize)*getSleepDuration());
 		
 		List<Future<String>> futures = new ArrayList<>();
 		
@@ -30,13 +34,24 @@ public class ThrottlerIT {
 		}
 		Instant registeredStart = Instant.now();
 		for (Future<String>  future: futures) {
-			future.get();
+			String string = future.get();
+			Assert.assertThat(string, RegexMatchers.isUuid());
 		}
 		Instant end = Instant.now();
 		Duration processingTime = Duration.between(registeredStart, end);
-		Assert.assertThat(processingTime, Matchers.greaterThanOrEqualTo(Duration.ofSeconds(minDuration)));
+		Assert.assertThat(processingTime, Matchers.greaterThanOrEqualTo(minDuration));
 	}
 
+	private int getSleepDuration() throws Exception {
+		Field field = SlowService.class.getDeclaredField("SLEEP_DURATION");
+		try {
+			field.setAccessible(true);
+			return field.getInt(null);
+		} finally {
+			field.setAccessible(false);
+		}
+	}
+	
 	private WebTarget createTarget(String uri) {
 		WebTarget target = ClientBuilder.newClient()
 				.target(uri);

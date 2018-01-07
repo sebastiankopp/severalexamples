@@ -23,17 +23,19 @@ public class CustomLoggerInterceptor {
 				.getAssignedLogger();
 		try {
 			Instant startTs = Instant.now();
-			logger.debug("Entering method {} of class {} with params {}",
+			logger.debug("Entering method {} of class {} with params {}. (Thread {})",
 					() -> ic.getMethod().getName(),
 					() -> ic.getTarget().getClass(),
-					() -> ic.getParameters());
+					() -> ic.getParameters(),
+					() -> Thread.currentThread().getId());
 			Object rc = ic.proceed();
 			Instant end = Instant.now();
-			logger.debug("Existing method {} of class {} which returned value {} and took {} ms to proceed.",
+			logger.debug("Existing method {} of class {} which returned value {} and took {} ms to proceed. (Thread {})",
 					() -> ic.getMethod().getName(),
 					() -> ic.getTarget().getClass(),
 					() -> rc,
-					() -> Duration.between(startTs, end).toMillis());
+					() -> Duration.between(startTs, end).toMillis(),
+					() -> Thread.currentThread().getId());
 			return rc;
 		} catch (Exception e) {
 			logger.error("An error occured while processing", e);
