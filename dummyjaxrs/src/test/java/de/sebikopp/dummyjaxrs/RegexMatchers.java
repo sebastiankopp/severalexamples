@@ -9,7 +9,7 @@ import org.hamcrest.Matcher;
 public class RegexMatchers {
 	
 	public static <T extends CharSequence> Matcher<T> matchesPattern(String pattern) {
-		return new RegexMatcher<T>(pattern);
+		return new RegexMatcher<T>(pattern, true);
 	}
 	
 	public static <T extends CharSequence> Matcher<T> matchesPatternIgnoreCase(String pattern) {
@@ -24,10 +24,6 @@ public class RegexMatchers {
 
 		private final Pattern regex;
 		private final boolean caseSensitive;
-		
-		public RegexMatcher(String pattern) {
-			this(pattern, true);
-		}
 		
 		public RegexMatcher(String regex, boolean caseSensitive) {
 			this.regex = Pattern.compile(regex, caseSensitive? 0 : Pattern.CASE_INSENSITIVE);
