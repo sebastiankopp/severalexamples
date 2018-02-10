@@ -20,6 +20,34 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<finalName>jaxb-mtom</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-xjc-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>xsdtojava-tests</goal>
+						</goals>
+						<id>gen-test-stubs</id>
+						<phase>generate-test-sources</phase>
+						<configuration>
+							<xsdOptions>
+								<xsdOption>
+									<xsd>${basedir}/src/test/resources/xsd/imagesWithMetainfos.xsd</xsd>
+									<packagename>de.sebikopp.jaxb.mtom.test.stubs</packagename>
+								</xsdOption>
+							</xsdOptions>
+							<testSourceRoot>${project.build.directory}/generated/generated-test-sources</testSourceRoot>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
