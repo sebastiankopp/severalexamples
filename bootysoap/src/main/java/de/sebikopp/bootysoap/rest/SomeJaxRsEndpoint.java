@@ -35,7 +35,7 @@ public class SomeJaxRsEndpoint {
 	public void sthInHyperspeed(@Context HttpHeaders headers, @Suspended AsyncResponse asyncResponse) {
 		asyncResponse.setTimeout(3, TimeUnit.SECONDS);
 		CompletableFuture.supplyAsync(jnk::gimmeSomethingInLudicrousSpeed, executor)
-				.<String>thenApplyAsync(e -> e + Objects.toString(headers.getRequestHeaders()), executor)
+				.thenApplyAsync(e -> e + Objects.toString(headers.getRequestHeaders()), executor)
 				.thenAccept(asyncResponse::resume);
 	}
 	
