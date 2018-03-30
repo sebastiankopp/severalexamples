@@ -23,6 +23,7 @@ import de.sebikopp.bootysoap.batch.entity.Person;
 
 @Configuration
 @EnableBatchProcessing
+// Skip executing batch job on startup by adding sysprop <code>spring.batch.job.enabled=false</code>
 public class BatchConf {
 	@Autowired
 	JobBuilderFactory jobBuilderFactory;

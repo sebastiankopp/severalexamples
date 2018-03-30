@@ -29,6 +29,8 @@ public class ITWsClient {
 		proxy = service.getPort(DigestWebservice.class);
 		BindingProvider bp = (BindingProvider) proxy;
 		bp.getRequestContext().put("javax.xml.ws.client.connectionTimeout", 10_000);
+		bp.getRequestContext().put("schema-validation-enabled", "true");
+		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4jLogger");
 	}
 	
 	@Test
@@ -63,7 +65,7 @@ public class ITWsClient {
 		proxy.getDigest(getCallId(), request);
 	}
 	
-	private CallID getCallId() {
+	static CallID getCallId() {
 		CallID callId = new CallID();
 		callId.setMustUnderstand(Boolean.TRUE);
 		callId.setValue(UUID.randomUUID().toString());

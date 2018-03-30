@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
+import org.apache.cxf.annotations.SchemaValidation;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ import de.sebikopp.bootysoap.wsdlx.digestwebservice.PushPayloadRequest;
 @WebService(targetNamespace="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice", serviceName="DigestWebservice", name="DigestWebservice",
 			portName="DigestWebserviceSOAP", wsdlLocation="wsdl/DigestWebservice.wsdl")
 @Service
-//@SchemaValidation
+@SchemaValidation
 public class DigestWSImpl implements DigestWebservice{
 
 	@Autowired

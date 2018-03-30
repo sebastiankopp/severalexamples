@@ -13,7 +13,7 @@
 		<sequence>
 			<element name="value" type="tns:UUIDSType" />
 		</sequence>
-		<attribute ref="soap:mustUnderstand" use="required" />
+		<attribute ref="soap:mustUnderstand" use="required" fixed="1"/>
 		<attribute ref="soap:actor" fixed="http://schemas.xmlsoap.org/soap/actor/next" />
 	</complexType>
 	

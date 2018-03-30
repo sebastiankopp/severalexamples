@@ -3,6 +3,7 @@ package de.sebikopp.bootysoap.soap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.xml.namespace.QName;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.MessageContext;
@@ -38,6 +39,7 @@ public class WsConfig {
 		endpointImpl.setWsdlLocation("wsdl/DigestWebservice.wsdl");
 		endpointImpl.publish("/dig");
 		addHandler(endpointImpl, handler);
+		addHandler(endpointImpl, new HeaderAcceptor(new QName("http://sebikopp.de/bootysoap/crosscuttingTypes", "CallID")));
 //		completeInterceptors();
 		return endpointImpl;
 	}
