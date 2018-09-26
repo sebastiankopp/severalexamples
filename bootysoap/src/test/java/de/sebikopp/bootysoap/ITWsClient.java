@@ -7,9 +7,9 @@ import java.security.MessageDigest;
 import java.util.UUID;
 import javax.xml.ws.BindingProvider;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import de.sebikopp.bootysoap.crosscuttingtypes.CallID;
 import de.sebikopp.bootysoap.wsdlx.digestwebservice.CreateDigestRequest;
@@ -23,7 +23,7 @@ public class ITWsClient {
 	
 	private DigestWebservice proxy;
 	private final String urlWsdl = "http://127.0.0.1:9080/cxf/dig?wsdl";
-	@Before
+	@BeforeMethod
 	public void init() throws MalformedURLException {
 		DigestWebservice_Service service = new DigestWebservice_Service(new URL(urlWsdl));
 		proxy = service.getPort(DigestWebservice.class);
@@ -42,7 +42,7 @@ public class ITWsClient {
 		body.setPayload(payload);
 		CreateDigestResponse digestResponse = proxy.getDigest(getCallId(), body);
 		byte[] correctDigest = MessageDigest.getInstance(algorithm).digest(payload);	
-		Assert.assertArrayEquals(correctDigest, digestResponse.getPayloadDigest());
+		Assert.assertEquals(correctDigest, digestResponse.getPayloadDigest());
 	}
 
 	private byte[] generatePayload() {
@@ -50,13 +50,13 @@ public class ITWsClient {
 		return payload;
 	}
 	
-	@Test(timeout=2_500)
+	@Test(timeOut=2_500)
 	public void testCallAsync() {
 		PushPayloadRequest pushPayloadRequest = new PushPayloadRequest("Hallo Welt".getBytes(StandardCharsets.UTF_8));
 		proxy.pushPayload(getCallId(), pushPayloadRequest);
 	}
 
-	@Test(expected=CustomFault.class)
+	@Test(expectedExceptions=CustomFault.class)
 	public void testFault() throws Exception {
 		CreateDigestRequest request = new CreateDigestRequest();
 		final String algorithm = "FOO-256";

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice"
 	xmlns:cc="http://sebikopp.de/bootysoap/crosscuttingTypes"
