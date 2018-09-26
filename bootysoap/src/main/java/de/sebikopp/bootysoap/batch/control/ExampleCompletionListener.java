@@ -7,6 +7,8 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import de.sebikopp.bootysoap.jms.control.JmsSender;
+
 @Component
 public class ExampleCompletionListener extends JobExecutionListenerSupport {
 	
@@ -14,10 +16,13 @@ public class ExampleCompletionListener extends JobExecutionListenerSupport {
 	
 	private final JdbcPeopleReader rdr;
 
+	private final JmsSender msgSender;
+	
 	@Autowired
-	public ExampleCompletionListener(Logger logger, JdbcPeopleReader reader) {
+	public ExampleCompletionListener(Logger logger, JdbcPeopleReader reader, JmsSender jmsSender) {
 		this.logger = logger;
 		rdr = reader;
+		msgSender = jmsSender;
 	}
 	
 	@Override
@@ -25,5 +30,6 @@ public class ExampleCompletionListener extends JobExecutionListenerSupport {
 		if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
 			rdr.getAllPeople().forEach(e -> logger.info("Found {} in the database", e));
 		}
+		msgSender.send("Finished batch job!");
 	}
 }

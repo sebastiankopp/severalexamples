@@ -23,7 +23,7 @@ public class SpringJmsTest extends AbstractTestNGSpringContextTests {
 	JmsSender sender;
 	
 	@Test
-	public void testName() throws Exception {
+	public void testMessaging() throws Exception {
 		String msg = "Some foo " + randomUUID();
 		sender.send(msg);
 		TimeUnit.MILLISECONDS.sleep(200);
