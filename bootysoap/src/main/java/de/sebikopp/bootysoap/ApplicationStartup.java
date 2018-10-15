@@ -1,5 +1,7 @@
 package de.sebikopp.bootysoap;
 
+import java.util.Locale;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		// Uncomment the line below for testing logging
 //		org.apache.logging.log4j.core.config.Configurator.setRootLevel(org.apache.logging.log4j.Level.TRACE);
+		Locale.setDefault(Locale.ENGLISH);
 	}
 
 } 
