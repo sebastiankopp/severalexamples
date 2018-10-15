@@ -5,7 +5,12 @@ Contains several proofs of concepts in order to present a variety of technologie
 dummyjaxrs is a "kitchensink" maven project including several examples for Java EE.
 
 ## Bootysoap
-Bootysoap is similar, but based on Spring Boot and serves as a proof of concept for SOAP (of course in a schema-first style...).
+Bootysoap is similar, but based on Spring Boot and serves as a proof of concept for integrating the following technologies:
+* SOAP (of course in a schema-first style...)
+* REST (based on JAX-RS instead of Spring MVC)
+* JMS
+* Batch
+* JSF
 
 ## JAXB.MTOM
 This Maven project shows how to realise MTOM outside of JAX-WS (e. g. when using a custom transport protocol).
