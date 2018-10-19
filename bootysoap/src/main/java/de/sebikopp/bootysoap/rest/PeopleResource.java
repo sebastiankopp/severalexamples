@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,7 @@ import de.sebikopp.bootysoap.batch.entity.Person;
 
 @Component
 @Path("people")
+@RequestScope
 public class PeopleResource {
 
 	@Autowired

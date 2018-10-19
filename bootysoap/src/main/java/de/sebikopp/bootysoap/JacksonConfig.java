@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.datatype.jsr353.JSR353Module;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 
 @Configuration
@@ -29,7 +31,13 @@ public class JacksonConfig {
 		module.addDeserializer(Instant.class, new JTInstantDeserializer());
 		module.addSerializer(Instant.class, new JTInstantSerializer());
 		mapper.registerModule(module);
+		mapper.registerModule(new JSR353Module());
 		return mapper;
+	}
+	
+	@Bean
+	public JacksonJsonProvider jsonProvider(ObjectMapper objMapper) {
+		return new JacksonJsonProvider(objMapper);
 	}
 	
 	private static class JTInstantSerializer extends StdSerializer<Instant> {

@@ -1,5 +1,8 @@
 package de.sebikopp.bootysoap.rest;
 
+import static java.util.Arrays.asList;
+import static java.util.UUID.randomUUID;
+
 import java.io.IOException;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -14,12 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContainerRequestLogger implements ContainerRequestFilter {
 
+	private static final String SPECIAL_HEADER = "XX-VerySpecialInternalCallId";
 	@Autowired
 	Logger logger;
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		logger.info("Encountered some request on {}", () -> requestContext.getUriInfo().getRequestUri());
+		requestContext.getHeaders().putIfAbsent(SPECIAL_HEADER, asList(randomUUID().toString()));
 		logger.debug("Http Headers: {}", requestContext.getHeaders());
 	}
 
