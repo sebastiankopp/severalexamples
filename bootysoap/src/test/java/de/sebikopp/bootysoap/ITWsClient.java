@@ -1,5 +1,8 @@
 package de.sebikopp.bootysoap;
 
+import static de.sebikopp.bootysoap.CustomMatchers.urlStrReachable;
+import static de.sebikopp.bootysoap.TestNgAssume.assumeThat;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +28,7 @@ public class ITWsClient {
 	private final String urlWsdl = "http://127.0.0.1:9080/cxf/dig?wsdl";
 	@BeforeMethod
 	public void init() throws MalformedURLException {
+		assumeThat(urlWsdl, urlStrReachable());
 		DigestWebservice_Service service = new DigestWebservice_Service(new URL(urlWsdl));
 		proxy = service.getPort(DigestWebservice.class);
 		BindingProvider bp = (BindingProvider) proxy;
@@ -35,6 +39,7 @@ public class ITWsClient {
 	
 	@Test
 	public void test1() throws Exception {
+		assumeThat(urlWsdl, urlStrReachable());
 		CreateDigestRequest body = new CreateDigestRequest();
 		final String algorithm = "SHA-256";
 		body.setAlgorithm(algorithm);
@@ -52,12 +57,14 @@ public class ITWsClient {
 	
 	@Test(timeOut=2_500)
 	public void testCallAsync() {
+		assumeThat(urlWsdl, urlStrReachable());
 		PushPayloadRequest pushPayloadRequest = new PushPayloadRequest("Hallo Welt".getBytes(StandardCharsets.UTF_8));
 		proxy.pushPayload(getCallId(), pushPayloadRequest);
 	}
 
 	@Test(expectedExceptions=CustomFault.class)
 	public void testFault() throws Exception {
+		assumeThat(urlWsdl, urlStrReachable());
 		CreateDigestRequest request = new CreateDigestRequest();
 		final String algorithm = "FOO-256";
 		request.setAlgorithm(algorithm);
