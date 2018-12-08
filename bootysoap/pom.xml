@@ -2,25 +2,33 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.sebikopp</groupId>
 	<artifactId>bootysoap</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>de.sebikopp</groupId>
+		<artifactId>severalexamples-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
 	<properties>
+		<cxf.version>3.2.7</cxf.version>
+		<spring.boot.version>2.1.1.RELEASE</spring.boot.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cxf.version>3.2.6</cxf.version>
 	</properties>
-	<developers>
-		<developer>
-			<name>Sebastian Kopp</name>
-		</developer>
-	</developers>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.0.RELEASE</version>
-	</parent>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -197,6 +205,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
 				<executions>
 					<execution>
 						<id>pkg-sprboot</id>
