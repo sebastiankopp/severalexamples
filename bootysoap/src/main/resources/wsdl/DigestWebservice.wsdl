@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice"
-	xmlns:cc="http://sebikopp.de/bootysoap/crosscuttingTypes"
+	xmlns:tns="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice"
+	xmlns:cc="http://sebastiankopp.de/severalexamples/bootysoap/crosscuttingTypes"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	name="DigestWebservice" targetNamespace="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice">
+	name="DigestWebservice" targetNamespace="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice">
 	<wsdl:types>
-		<xsd:schema targetNamespace="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice">
+		<xsd:schema targetNamespace="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice">
 			<xsd:include schemaLocation="./types.xsd"></xsd:include>
-			<xsd:import namespace="http://sebikopp.de/bootysoap/crosscuttingTypes" schemaLocation="./crosscuttingTypes.xsd" />
+			<xsd:import namespace="http://sebastiankopp.de/severalexamples/bootysoap/crosscuttingTypes" schemaLocation="./crosscuttingTypes.xsd" />
 		</xsd:schema>
 	</wsdl:types>
 	<wsdl:message name="GetDigestRequestMsg">
@@ -39,7 +39,7 @@
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="GetDigest">
 			<soap:operation
-				soapAction="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice/GetDigest" />
+				soapAction="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice/GetDigest" />
 			<wsdl:input>
 				<soap:header use="literal" part="header1" message="tns:GetDigestRequestMsg"></soap:header>
 				<soap:body use="literal" parts="body"/>
@@ -49,7 +49,7 @@
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="PushPayload">
-			<soap:operation soapAction="http://sebikopp.de/bootysoap/wsdlx/DigestWebservice/PushPayload"/>
+			<soap:operation soapAction="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice/PushPayload"/>
 			<wsdl:input>
 				<soap:header use="literal" part="hdx" message="tns:PushPayloadRequestMsg"></soap:header>
 				<soap:body use="literal" parts="body"/>

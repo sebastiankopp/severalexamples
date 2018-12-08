@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sebikopp.de/bootysoap/crosscuttingTypes"
-	xmlns:tns="http://sebikopp.de/bootysoap/crosscuttingTypes" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sebastiankopp.de/severalexamples/bootysoap/crosscuttingTypes"
+	xmlns:tns="http://sebastiankopp.de/severalexamples/bootysoap/crosscuttingTypes" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
 	elementFormDefault="qualified">
 	<import namespace="http://schemas.xmlsoap.org/soap/envelope/"
 		schemaLocation="./xmlsoap/SoapEnvelope.xsd"></import>
