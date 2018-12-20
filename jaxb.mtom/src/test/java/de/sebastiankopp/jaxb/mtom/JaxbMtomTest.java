@@ -1,24 +1,19 @@
-package de.sebikopp.jaxb.mtom;
+package de.sebastiankopp.jaxb.mtom;
 
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Random;
-import javax.activation.DataHandler;
-import javax.xml.bind.JAXBElement;
-import javax.xml.validation.Schema;
-
+import de.sebastiankopp.jaxb.mtom.test.stubs.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.xml.sax.SAXParseException;
 
-import de.sebikopp.jaxb.mtom.test.stubs.ImgListCType;
-import de.sebikopp.jaxb.mtom.test.stubs.ImgWithMetadataCType;
-import de.sebikopp.jaxb.mtom.test.stubs.MetadataSetCType;
-import de.sebikopp.jaxb.mtom.test.stubs.ObjectFactory;
-import de.sebikopp.jaxb.mtom.test.stubs.SupportedImgFiletypeSType;
+import javax.activation.DataHandler;
+import javax.xml.bind.JAXBElement;
+import javax.xml.validation.Schema;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Random;
 
 public class JaxbMtomTest {
 	@Rule
@@ -88,7 +83,7 @@ public class JaxbMtomTest {
 		JaxbMtomContainer container = converter.encodeDataFromJaxbElem(imageList, Optional.empty());
 		converter.unmarshal(container, ImgListCType.class, Optional.empty());
 	}
-	@Test 
+	@Test
 	public void testUniqueWithValidation() throws Exception {
 		expectedEx.expect(CustomExceptionMatcher.of(".*duplicate unique value.*", SAXParseException.class));
 		final Optional<Schema> schema = Optional.of("xsd/imagesWithMetainfos.xsd")

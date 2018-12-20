@@ -46,7 +46,7 @@
 							<xsdOptions>
 								<xsdOption>
 									<xsd>${basedir}/src/test/resources/xsd/imagesWithMetainfos.xsd</xsd>
-									<packagename>de.sebikopp.jaxb.mtom.test.stubs</packagename>
+									<packagename>de.sebastiankopp.jaxb.mtom.test.stubs</packagename>
 								</xsdOption>
 							</xsdOptions>
 							<testSourceRoot>${project.build.directory}/generated/generated-test-sources</testSourceRoot>

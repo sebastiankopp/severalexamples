@@ -1,4 +1,4 @@
-package de.sebikopp.jaxb.mtom;
+package de.sebastiankopp.jaxb.mtom;
 
 import javax.activation.DataHandler;
 import javax.xml.bind.attachment.AttachmentUnmarshaller;

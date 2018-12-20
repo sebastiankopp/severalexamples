@@ -18,8 +18,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<scm>
-		<connection>scm:git:https://github.com/sebikopp/severalexamples.git</connection>
-		<developerConnection>scm:git:https://github.com/sebikopp/severalexamples.git</developerConnection>
-		<url>scm:git:https://github.com/sebikopp/severalexamples.git</url>
+		<connection>scm:git:https://github.com/sebastiankopp/severalexamples.git</connection>
+		<developerConnection>scm:git:https://github.com/sebastiankopp/severalexamples.git</developerConnection>
+		<url>scm:git:https://github.com/sebastiankopp/severalexamples.git</url>
 	</scm>
 </project>
