@@ -50,12 +50,20 @@
 								<xsdOption>
 									<xsd>${basedir}/src/test/resources/xsd/imagesWithMetainfos.xsd</xsd>
 									<packagename>de.sebikopp.jaxb.mtom.test.stubs</packagename>
+									<extensionArgs>
+										<extensionArg>-Xvalue-constructor</extensionArg>
+									</extensionArgs>
 								</xsdOption>
 							</xsdOptions>
 							<testSourceRoot>${project.build.directory}/generated/generated-test-sources</testSourceRoot>
 						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<extensions>
+						<extension>org.jvnet.jaxb2_commons:jaxb2-value-constructor:3.0</extension>
+					</extensions>
+				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.glassfish.jaxb</groupId>
