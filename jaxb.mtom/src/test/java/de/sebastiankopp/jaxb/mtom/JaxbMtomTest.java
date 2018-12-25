@@ -14,11 +14,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.xml.sax.SAXParseException;
 
-import de.sebikopp.jaxb.mtom.test.stubs.ImgListCType;
-import de.sebikopp.jaxb.mtom.test.stubs.ImgWithMetadataCType;
-import de.sebikopp.jaxb.mtom.test.stubs.MetadataSetCType;
-import de.sebikopp.jaxb.mtom.test.stubs.ObjectFactory;
-import de.sebikopp.jaxb.mtom.test.stubs.SupportedImgFiletypeSType;
+import de.sebastiankopp.jaxb.mtom.test.stubs.ImgListCType;
+import de.sebastiankopp.jaxb.mtom.test.stubs.ImgWithMetadataCType;
+import de.sebastiankopp.jaxb.mtom.test.stubs.MetadataSetCType;
+import de.sebastiankopp.jaxb.mtom.test.stubs.ObjectFactory;
+import de.sebastiankopp.jaxb.mtom.test.stubs.SupportedImgFiletypeSType;
 
 public class JaxbMtomTest {
 	@Rule
