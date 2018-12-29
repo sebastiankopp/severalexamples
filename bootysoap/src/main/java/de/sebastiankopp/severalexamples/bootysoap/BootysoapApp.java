@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BootysoapApp {
 	
 	public static void main(String[] args) {
-		SyspropInitializer.extendSysprops();
-		SpringApplication.run(BootysoapApp.class);
+		SpringApplication.run(BootysoapApp.class, args);
 	}
 
 }
