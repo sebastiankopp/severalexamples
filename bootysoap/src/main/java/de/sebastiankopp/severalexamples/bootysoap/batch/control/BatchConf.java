@@ -18,7 +18,7 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
+import org.springframework.core.io.FileSystemResource;
 import de.sebastiankopp.severalexamples.bootysoap.batch.entity.Person;
 
 @Configuration
@@ -42,7 +42,7 @@ public class BatchConf {
 	
 	FlatFileItemReader<Person> reader() {
 		FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
-		reader.setResource(new PathResource(Paths.get("testdata", "sample.csv")));
+		reader.setResource(new FileSystemResource(Paths.get("testdata", "sample.csv")));
 //		reader.setLinesToSkip(linesToSkip);
 		reader.setLineMapper((lineContent, lineNumber) -> {
 			String[] split = lineContent.split("[;,]");
