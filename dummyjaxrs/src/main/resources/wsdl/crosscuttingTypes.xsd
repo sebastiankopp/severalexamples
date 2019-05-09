@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sebastiankopp.de/severalexamples/bootysoap/crosscuttingTypes"
+	xmlns:tns="http://sebastiankopp.de/severalexamples/bootysoap/crosscuttingTypes" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+	elementFormDefault="qualified">
+	<import namespace="http://schemas.xmlsoap.org/soap/envelope/"
+		schemaLocation="./xmlsoap/SoapEnvelope.xsd"></import>
+	<simpleType name="UUIDSType">
+		<restriction base="token">
+			<pattern value="[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}" />
+		</restriction>
+	</simpleType>
+	<complexType name="CallID">
+		<sequence>
+			<element name="value" type="tns:UUIDSType" />
+		</sequence>
+		<attribute ref="soap:mustUnderstand" use="required" fixed="1"/>
+		<attribute ref="soap:actor" fixed="http://schemas.xmlsoap.org/soap/actor/next" />
+	</complexType>
+	
+	<complexType name="FaultContent">
+		<sequence>
+			<element name="Message" type="normalizedString"></element>
+			<element name="StackTrace" type="string" minOccurs="0"></element>
+			<element name="FaultID" type="tns:UUIDSType"></element>
+			<element name="CallID" type="tns:UUIDSType"></element>		
+		</sequence>
+	</complexType>
+	<element name="CallID" type="tns:CallID" />
+	<element name="FaultContent" type="tns:FaultContent"></element>
+	
+</schema>

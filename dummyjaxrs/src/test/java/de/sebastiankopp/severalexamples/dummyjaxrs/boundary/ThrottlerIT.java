@@ -1,20 +1,20 @@
 package de.sebastiankopp.severalexamples.dummyjaxrs.boundary;
 
+import de.sebastiankopp.severalexamples.dummyjaxrs.test.RegexMatchers;
+import de.sebastiankopp.severalexamples.dummyjaxrs.control.SlowService;
+import org.hamcrest.Matchers;
+import org.testng.annotations.Test;
+
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 
-import de.sebastiankopp.severalexamples.dummyjaxrs.control.SlowService;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
-
-import de.sebastiankopp.severalexamples.dummyjaxrs.RegexMatchers;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ThrottlerIT {
 	
@@ -36,11 +36,11 @@ public class ThrottlerIT {
 		Instant registeredStart = Instant.now();
 		for (Future<String>  future: futures) {
 			String string = future.get();
-			Assert.assertThat(string, RegexMatchers.isUuid());
+			assertThat(string, RegexMatchers.isUuid());
 		}
 		Instant end = Instant.now();
 		Duration processingTime = Duration.between(registeredStart, end);
-		Assert.assertThat(processingTime, Matchers.greaterThanOrEqualTo(minDuration));
+		assertThat(processingTime, Matchers.greaterThanOrEqualTo(minDuration));
 	}
 
 	private int getSleepDuration() throws Exception {
