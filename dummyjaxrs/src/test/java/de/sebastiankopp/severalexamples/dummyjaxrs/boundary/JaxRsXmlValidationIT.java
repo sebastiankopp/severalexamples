@@ -1,9 +1,7 @@
 package de.sebastiankopp.severalexamples.dummyjaxrs.boundary;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
+import org.hamcrest.Matchers;
+import org.testng.annotations.Test;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -11,10 +9,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 public class JaxRsXmlValidationIT {
 
@@ -30,7 +32,7 @@ public class JaxRsXmlValidationIT {
 				.buildPost(loadResourceAsEntity("xml/validXml.xml"))
 				.invoke();
 		int status = rsp.getStatus();
-		Assert.assertThat(status, Matchers.allOf(Matchers.greaterThanOrEqualTo(200), Matchers.lessThan(300)));
+		assertThat(status, Matchers.allOf(Matchers.greaterThanOrEqualTo(200), Matchers.lessThan(300)));
 	}
 
 	
@@ -41,7 +43,7 @@ public class JaxRsXmlValidationIT {
 				.buildPost(loadResourceAsEntity("xml/nonValidXml.xml"))
 				.invoke();
 		int status = rsp.getStatus();
-		Assert.assertEquals(status, Status.BAD_REQUEST.getStatusCode());
+		assertEquals(status, Status.BAD_REQUEST.getStatusCode());
 	}
 	
 	private void initJaxRsClient() {
@@ -53,7 +55,7 @@ public class JaxRsXmlValidationIT {
 					.path("peoplexml");
 		} catch (Exception e) {
 			e.printStackTrace();
-			Assert.fail("Could not run tests due to an exception");
+			fail("Could not run tests due to an exception");
 		}
 	}
 	

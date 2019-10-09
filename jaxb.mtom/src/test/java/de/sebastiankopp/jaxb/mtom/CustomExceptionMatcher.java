@@ -10,7 +10,7 @@ import org.hamcrest.Description;
  * and whether its message matches a given regular expression  (no case sensitivity).
  * 
  * This class is applicable for any {@linkplain Throwable} instances which do not match the class {@linkplain Exception}.
- * @author sebi
+ * @author sebastian
  *
  * @param <T>
  */

@@ -1,15 +1,18 @@
 package de.sebastiankopp.severalexamples.dummyjaxrs.logging.boundary;
 
+import org.testng.Assert;
+import org.testng.AssertJUnit;
+import org.testng.annotations.Test;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 @SuppressWarnings("unchecked")
 public class TestJsonToMapParser {
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expectedExceptions=IllegalArgumentException.class)
 	public void test1() {
 		String json = "[\"foo\", \"bar\"], \"baz\"";
 		JsonToMapParser.fromJsonString(json);
@@ -22,7 +25,7 @@ public class TestJsonToMapParser {
 		Assert.assertEquals(1, jsonMap.size());
 		List<String> lst = (List<String>) jsonMap.get("content");
 		String[] expectedVals = {"foo", "bar", "baz"};
-		Assert.assertArrayEquals(expectedVals, lst.stream().toArray(String[]::new));
+		AssertJUnit.assertArrayEquals(expectedVals, lst.stream().toArray(String[]::new));
 		
 	}
 	
@@ -35,7 +38,8 @@ public class TestJsonToMapParser {
 		List<Object> fooVal = (List<Object>) jsonMap.get("foo");
 		Class<?>[] actuals = fooVal.stream().map(Object::getClass).toArray(Class[]::new);
 		Class<?>[] expectedClasses = {Long.class, Integer.class};
-		Assert.assertArrayEquals(expectedClasses, actuals);
+		assertArrayEquals(expectedClasses, actuals);
+		
 	}
 
 }

@@ -1,40 +1,39 @@
 package de.sebastiankopp.severalexamples.dummyjaxrs.logging.boundary;
 
-import java.io.IOException;
-import javax.inject.Inject;
-
 import de.sebastiankopp.severalexamples.dummyjaxrs.control.SlowService;
+import de.sebastiankopp.severalexamples.dummyjaxrs.test.logging.TestScopeAppender;
 import org.hamcrest.Matchers;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.descriptor.api.beans11.BeansDescriptor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import de.sebastiankopp.severalexamples.dummyjaxrs.test.logging.TestScopeAppender;
+import javax.inject.Inject;
+import java.io.IOException;
 
-@RunWith(Arquillian.class)
-public class InterceptionTest {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.fail;
+
+public class InterceptionTest extends Arquillian {
 	
 	@Inject
 	SlowService slowService;
 	
 	private TestScopeAppender appender;
 	
-	@Before
+	@BeforeMethod
 	public void before() throws IOException {
 		appender = TestScopeAppender.byName("TScope").orElse(null);
 		if (appender != null)  {
 			appender.clear();
 		} else {
-			Assert.fail("Missing TestScopeAppender");
+			fail("Missing TestScopeAppender");
 		}
 	}
 	
@@ -50,14 +49,14 @@ public class InterceptionTest {
 	}
 	
 	@Test
-	public void t1() throws IOException, InterruptedException {
+	public void t1() {
 		int siz1 = appender.getEvents().size();
 		slowService.giveMeSomeRandom();
 		int siz2 = appender.getEvents().size();
-		Assert.assertThat(siz2, Matchers.greaterThan(siz1));
+		assertThat(siz2, Matchers.greaterThan(siz1));
 	}
 	
-	@After
+	@AfterMethod
 	public void clearAll() throws IOException {
 		appender.clear();
 	}

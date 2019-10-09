@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
  * 	<li>Validation of constraints like <code>unique</code>, <code>key</code> and <code>keyref</code>
  * </ul>
  *  
- * @author sebi
+ * @author sebastian
  *
  * @param <T> Type of root element which has to be validated -- only if its type is specified via the constructor.
  */

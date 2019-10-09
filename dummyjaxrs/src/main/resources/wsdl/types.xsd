@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice"
+	xmlns:tns="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<simpleType name="NonEmptyPayloadSType">
+		<restriction base="base64Binary">
+			<minLength value="3"></minLength>
+		</restriction>
+	</simpleType>
+	<complexType name="CreateDigestRequest">
+		<sequence>
+			<element name="Payload" type="tns:NonEmptyPayloadSType"/>
+			<element name="Algorithm" type="token" default="SHA-256"/>
+		</sequence>
+	</complexType>
+	<complexType name="CreateDigestResponse">
+		<sequence>
+			<element name="PayloadDigest" type="hexBinary"/>
+		</sequence>
+	</complexType>
+	<complexType name="PushPayloadRequest">
+		<sequence>
+			<element name="Payload" type="tns:NonEmptyPayloadSType"/>
+		</sequence>
+	</complexType>
+	<element name="CreateDigestRequest" type="tns:CreateDigestRequest" />
+	<element name="CreateDigestResponse" type="tns:CreateDigestResponse" />
+	<element name="PushPayloadRequest" type="tns:PushPayloadRequest"/> 
+</schema>

@@ -1,5 +1,13 @@
 package de.sebastiankopp.jaxb.mtom;
 
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Random;
+import javax.activation.DataHandler;
+import javax.xml.bind.JAXBElement;
+import javax.xml.validation.Schema;
+
 import de.sebastiankopp.jaxb.mtom.test.stubs.*;
 import org.junit.Before;
 import org.junit.Rule;
@@ -7,13 +15,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.xml.sax.SAXParseException;
 
-import javax.activation.DataHandler;
-import javax.xml.bind.JAXBElement;
-import javax.xml.validation.Schema;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Random;
 
 public class JaxbMtomTest {
 	@Rule

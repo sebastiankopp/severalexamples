@@ -1,4 +1,4 @@
-package de.sebastiankopp.severalexamples.dummyjaxrs;
+package de.sebastiankopp.severalexamples.dummyjaxrs.test;
 
 import java.util.regex.Pattern;
 
