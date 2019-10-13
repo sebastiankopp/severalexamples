@@ -11,14 +11,21 @@
 	<packaging>war</packaging>
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
-		<cxf.version>3.3.1</cxf.version>
+		<cxf.version>3.3.3</cxf.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-bom</artifactId>
-				<version>1.2.0.Final</version>
+				<version>1.5.0.Final</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-bom</artifactId>
+				<version>2.12.1</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -26,9 +33,9 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-api</artifactId>
+			<version>8.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -37,26 +44,18 @@
 			<version>${cxf.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.8.2</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.8.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
-			<version>2.8.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
-			<version>3.4.2</version>
+			<version>3.11.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.airhacks</groupId>
@@ -67,43 +66,50 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
+			<!-- Using  old version as TestNG 7 apparently does not work with Arquillian -->
 			<version>6.14.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.3</version>
+			<artifactId>hamcrest</artifactId>
+			<version>2.2-rc1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.25.1</version>
+			<version>2.29.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.29.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
-			<artifactId>javax.json</artifactId>
-			<version>1.1</version>
+			<artifactId>jakarta.json</artifactId>
+			<version>1.1.6</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>2.3.1</version>
+			<version>2.3.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.activation</groupId>
-			<artifactId>javax.activation</artifactId>
-			<version>1.2.0</version>
+			<artifactId>jakarta.activation</artifactId>
+			<version>1.2.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.messaging.saaj</groupId>
 			<artifactId>saaj-impl</artifactId>
-			<version>1.5.0</version>
+			<version>1.5.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -125,12 +131,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.weld</groupId>
-			<artifactId>weld-core</artifactId>
-			<version>2.4.5.Final</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.jboss.shrinkwrap.descriptors</groupId>
 			<artifactId>shrinkwrap-descriptors-depchain</artifactId>
 			<type>pom</type>
@@ -145,16 +145,21 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
+			<version>1.7.28</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.arquillian.container</groupId>
-			<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-			<version>1.0.0.Final</version>
+			<artifactId>arquillian-weld-embedded</artifactId>
+			<version>2.0.1.Final</version>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId>
+			<version>2.4.8.Final</version>
+			<scope>test</scope>
+		</dependency>
 		
 	</dependencies>
 	<build>
@@ -270,7 +275,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -297,7 +302,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>2.22.1</version>
+						<version>2.22.2</version>
 						<configuration>
 							<skipITs>true</skipITs>
 						</configuration>
