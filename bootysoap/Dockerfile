@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim-sid
+FROM openjdk:11-jre-slim-buster
 ENV DEPLOYMENT_DIR /app/bootysoap
 RUN mkdir -p ${DEPLOYMENT_DIR}
 COPY ./target/bootysoap.jar ${DEPLOYMENT_DIR}
