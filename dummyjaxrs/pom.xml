@@ -67,7 +67,7 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<!-- Using  old version as TestNG 7 apparently does not work with Arquillian -->
-			<version>6.14.3</version>
+			<version>7.7.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
