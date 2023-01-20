@@ -10,7 +10,7 @@
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jaxb.version>2.3.2</jaxb.version>
+		<jaxb.version>4.0.0</jaxb.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>${jaxb.version}</version>
+			<version>4.0.1</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -37,7 +37,7 @@
 			<plugin>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-xjc-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>4.0.0</version>
 				<executions>
 					<execution>
 						<goals>

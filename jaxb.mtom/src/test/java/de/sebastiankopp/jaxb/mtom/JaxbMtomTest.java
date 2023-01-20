@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
-import javax.activation.DataHandler;
-import javax.xml.bind.JAXBElement;
 import javax.xml.validation.Schema;
 
 import de.sebastiankopp.jaxb.mtom.test.stubs.*;
+import jakarta.activation.DataHandler;
+import jakarta.xml.bind.JAXBElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXParseException;

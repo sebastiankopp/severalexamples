@@ -1,5 +1,8 @@
 package de.sebastiankopp.jaxb.mtom;
 
+import jakarta.activation.DataHandler;
+import jakarta.xml.bind.attachment.AttachmentMarshaller;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,8 +11,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import javax.activation.DataHandler;
-import javax.xml.bind.attachment.AttachmentMarshaller;
 
 public final class MtomAttachmentMarshaller extends AttachmentMarshaller {
 	private final Map<String,byte[]> attachData = new HashMap<>();
