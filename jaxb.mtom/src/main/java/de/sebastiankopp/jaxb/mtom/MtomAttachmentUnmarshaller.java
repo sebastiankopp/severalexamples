@@ -1,9 +1,10 @@
 package de.sebastiankopp.jaxb.mtom;
 
-import javax.activation.DataHandler;
-import javax.xml.bind.attachment.AttachmentUnmarshaller;
 
-public class MtomAttachmentUnmarshaller extends AttachmentUnmarshaller{
+import jakarta.activation.DataHandler;
+import jakarta.xml.bind.attachment.AttachmentUnmarshaller;
+
+public class MtomAttachmentUnmarshaller extends AttachmentUnmarshaller {
 	private final JaxbMtomContainer cont;
 	public MtomAttachmentUnmarshaller(JaxbMtomContainer cont) {
 		this.cont = cont;

@@ -1,6 +1,7 @@
 package de.sebastiankopp.jaxb.mtom;
 
-import javax.activation.DataSource;
+import jakarta.activation.DataSource;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
