@@ -3,6 +3,8 @@ package de.sebastiankopp.severalexamples.bootysoap;
 import java.io.IOException;
 import java.time.Instant;
 
+import com.fasterxml.jackson.datatype.jsonp.JSONPModule;
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,8 +20,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.fasterxml.jackson.datatype.jsr353.JSR353Module;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 
 @Configuration
@@ -31,7 +31,7 @@ public class JacksonConfig {
 		module.addDeserializer(Instant.class, new JTInstantDeserializer());
 		module.addSerializer(Instant.class, new JTInstantSerializer());
 		mapper.registerModule(module);
-		mapper.registerModule(new JSR353Module());
+		mapper.registerModule(new JSONPModule());
 		return mapper;
 	}
 	

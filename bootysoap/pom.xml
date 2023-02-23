@@ -9,10 +9,9 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<properties>
-		<cxf.version>3.3.7</cxf.version>
-		<spring.boot.version>2.3.2.RELEASE</spring.boot.version>
+		<cxf.version>4.0.0</cxf.version>
+		<spring.boot.version>3.0.1</spring.boot.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hamcrest.version>2.2</hamcrest.version>
 		<jaxb.version>2.3.2</jaxb.version>
 		<jaxws.version>2.3.2</jaxws.version>
 	</properties>
@@ -75,16 +74,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-activemq</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 		<dependency>
@@ -96,16 +85,24 @@
 			<artifactId>spring-boot-starter-batch</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-artemis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>artemis-jakarta-server</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr353</artifactId>
+			<artifactId>jackson-datatype-jakarta-jsonp</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+			<artifactId>jackson-jakarta-rs-json-provider</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
@@ -118,17 +115,16 @@
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>jakarta.faces</artifactId>
-			<version>2.3.13</version>
+			<version>4.0.0</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.xml.ws</groupId>
 			<artifactId>jakarta.xml.ws-api</artifactId>
-			<version>${jaxws.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.jws</groupId>
@@ -138,39 +134,21 @@
 		<dependency>
 			<groupId>com.sun.activation</groupId>
 			<artifactId>jakarta.activation</artifactId>
-			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.messaging.saaj</groupId>
 			<artifactId>saaj-impl</artifactId>
-			<version>1.5.1</version>
 		</dependency>
+		-->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
+			<groupId>org.eclipse.parsson</groupId>
+			<artifactId>parsson</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.json</artifactId>
-			<version>1.1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>7.0.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest</artifactId>
-			<scope>test</scope>
-			<version>${hamcrest.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -185,14 +163,12 @@
 						<id>gen-ws-stubs</id>
 						<phase>generate-sources</phase>
 						<configuration>
-							<sourceRoot>${project.build.directory}/generated/generated-sources</sourceRoot>
-							<fork>true</fork>
 							<wsdlOptions>
 								<wsdlOption>
 									<wsdl>${basedir}/src/main/resources/wsdl/DigestWebservice.wsdl</wsdl>
 									<extraargs>
-										<!-- May not be placed at the config for the whole plugin in this 
-											project, this might lead to two default and two full-value-construvtors per 
+										<!-- May not be placed at the config for the whole plugin in this
+											project, this might lead to two default and two full-value-construvtors per
 											class which results in a compiler error. -->
 										<extraarg>-xjc-Xvalue-constructor</extraarg>
 									</extraargs>
@@ -210,6 +186,7 @@
 						<artifactId>jaxb2-value-constructor</artifactId>
 						<version>3.0</version>
 					</dependency>
+				<!--
 					<dependency>
 						<groupId>org.glassfish.jaxb</groupId>
 						<artifactId>jaxb-xjc</artifactId>
@@ -220,11 +197,7 @@
 						<artifactId>jakarta.xml.ws-api</artifactId>
 						<version>${jaxws.version}</version>
 					</dependency>
-					<dependency>
-						<groupId>de.sebastiankopp.helpers</groupId>
-						<artifactId>zba-jaxb-res</artifactId>
-						<version>1.0</version>
-					</dependency>
+				-->
 				</dependencies>
 			</plugin>
 			<plugin>

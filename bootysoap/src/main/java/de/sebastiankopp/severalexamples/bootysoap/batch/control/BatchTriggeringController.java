@@ -1,13 +1,13 @@
 package de.sebastiankopp.severalexamples.bootysoap.batch.control;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 @Path("batch-trigger")
 @Component

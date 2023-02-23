@@ -64,13 +64,6 @@
 						<extension>org.jvnet.jaxb2_commons:jaxb2-value-constructor:3.0</extension>
 					</extensions>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.glassfish.jaxb</groupId>
-						<artifactId>jaxb-xjc</artifactId>
-						<version>${jaxb.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

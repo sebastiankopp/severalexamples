@@ -1,17 +1,14 @@
 package de.sebastiankopp.severalexamples.bootysoap.rest;
 
-import static java.util.Arrays.asList;
-import static java.util.UUID.randomUUID;
-
-import java.io.IOException;
-
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.ext.Provider;
-
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.ext.Provider;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static java.util.Collections.singletonList;
+import static java.util.UUID.randomUUID;
 
 @Provider
 @Component
@@ -22,9 +19,9 @@ public class ContainerRequestLogger implements ContainerRequestFilter {
 	Logger logger;
 	
 	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException {
+	public void filter(ContainerRequestContext requestContext) {
 		logger.info("Encountered some request on {}", () -> requestContext.getUriInfo().getRequestUri());
-		requestContext.getHeaders().putIfAbsent(SPECIAL_HEADER, asList(randomUUID().toString()));
+		requestContext.getHeaders().putIfAbsent(SPECIAL_HEADER, singletonList(randomUUID().toString()));
 		logger.debug("Http Headers: {}", requestContext.getHeaders());
 	}
 

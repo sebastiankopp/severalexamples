@@ -1,5 +1,6 @@
 package de.sebastiankopp.severalexamples.bootysoap.batch.control;
 
+import de.sebastiankopp.severalexamples.bootysoap.jms.control.JmsSender;
 import org.apache.logging.log4j.Logger;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.JobExecution;
@@ -7,7 +8,7 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import de.sebastiankopp.severalexamples.bootysoap.jms.control.JmsSender;
+// import de.sebastiankopp.severalexamples.bootysoap.jms.control.JmsSender;
 
 @Component
 public class ExampleCompletionListener extends JobExecutionListenerSupport {

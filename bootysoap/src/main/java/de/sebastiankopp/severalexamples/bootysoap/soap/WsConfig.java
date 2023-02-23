@@ -1,14 +1,8 @@
 package de.sebastiankopp.severalexamples.bootysoap.soap;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.Endpoint;
-import javax.xml.ws.handler.Handler;
-import javax.xml.ws.handler.MessageContext;
-
-import de.sebastiankopp.severalexamples.bootysoap.wsdlx.digestwebservice.DigestWebservice;
+import jakarta.xml.ws.Endpoint;
+import jakarta.xml.ws.handler.Handler;
+import jakarta.xml.ws.handler.MessageContext;
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.logging.log4j.Logger;
@@ -16,14 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.xml.namespace.QName;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Configuration
 public class WsConfig {
 
 	@Autowired
 	Bus bus;
-	
-	@Autowired
-	DigestWebservice wsImpl;
 	
 	@Autowired
 	SoapLogHandler handler;
@@ -33,6 +28,7 @@ public class WsConfig {
 	
 	@Bean
 	public Endpoint endpoint() {
+		var wsImpl = new DigestWSImpl();
 		EndpointImpl endpointImpl = new EndpointImpl(bus, wsImpl);
 		logger.info("Publishing endpoint ...");
 		endpointImpl.setWsdlLocation("wsdl/DigestWebservice.wsdl");

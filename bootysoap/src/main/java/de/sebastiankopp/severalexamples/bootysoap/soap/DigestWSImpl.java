@@ -3,14 +3,15 @@ package de.sebastiankopp.severalexamples.bootysoap.soap;
 import de.sebastiankopp.severalexamples.bootysoap.crosscuttingtypes.CallID;
 import de.sebastiankopp.severalexamples.bootysoap.crosscuttingtypes.FaultContent;
 import de.sebastiankopp.severalexamples.bootysoap.wsdlx.digestwebservice.*;
+import jakarta.annotation.Resource;
+import jakarta.jws.WebService;
+import jakarta.xml.ws.WebServiceContext;
 import org.apache.cxf.annotations.SchemaValidation;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import javax.jws.WebService;
-import javax.xml.ws.WebServiceContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -22,12 +23,10 @@ import java.util.concurrent.TimeUnit;
 @WebService(targetNamespace="http://sebastiankopp.de/severalexamples/bootysoap/wsdlx/DigestWebservice",
 			serviceName="DigestWebservice", name="DigestWebservice",
 			portName="DigestWebserviceSOAP", wsdlLocation="wsdl/DigestWebservice.wsdl")
-@Service
 @SchemaValidation
 public class DigestWSImpl implements DigestWebservice {
 
-	@Autowired
-	Logger logger;
+	private static final Logger logger = LogManager.getLogger(DigestWSImpl.class);
 	
 	@Resource
 	WebServiceContext webServiceContext;

@@ -2,11 +2,11 @@ package de.sebastiankopp.severalexamples.bootysoap;
 
 import de.sebastiankopp.severalexamples.bootysoap.crosscuttingtypes.CallID;
 import de.sebastiankopp.severalexamples.bootysoap.wsdlx.digestwebservice.*;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import jakarta.xml.ws.BindingProvider;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
-import javax.xml.ws.BindingProvider;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -14,13 +14,16 @@ import java.security.MessageDigest;
 import java.util.UUID;
 
 import static de.sebastiankopp.severalexamples.bootysoap.CustomMatchers.urlStrReachable;
-import static de.sebastiankopp.severalexamples.bootysoap.TestNgAssume.assumeThat;
+import static de.sebastiankopp.severalexamples.bootysoap.HamcrestAssume.assumeThat;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ITWsClient {
 	
 	private DigestWebservice proxy;
 	private final String urlWsdl = "http://127.0.0.1:9080/cxf/dig?wsdl";
-	@BeforeMethod
+	@BeforeEach
 	public void init() throws MalformedURLException {
 		assumeThat(urlWsdl, urlStrReachable());
 		DigestWebservice_Service service = new DigestWebservice_Service(new URL(urlWsdl));
@@ -41,7 +44,7 @@ public class ITWsClient {
 		body.setPayload(payload);
 		CreateDigestResponse digestResponse = proxy.getDigest(getCallId(), body);
 		byte[] correctDigest = MessageDigest.getInstance(algorithm).digest(payload);	
-		Assert.assertEquals(correctDigest, digestResponse.getPayloadDigest());
+		assertEquals(digestResponse.getPayloadDigest(), correctDigest);
 	}
 
 	private byte[] generatePayload() {
@@ -49,21 +52,22 @@ public class ITWsClient {
 		return payload;
 	}
 	
-	@Test(timeOut=2_500)
+	@Test
+	@Timeout(value = 2_500, unit = MILLISECONDS)
 	public void testCallAsync() {
 		assumeThat(urlWsdl, urlStrReachable());
 		PushPayloadRequest pushPayloadRequest = new PushPayloadRequest("Hallo Welt".getBytes(StandardCharsets.UTF_8));
 		proxy.pushPayload(getCallId(), pushPayloadRequest);
 	}
 
-	@Test(expectedExceptions=CustomFault.class)
+	@Test
 	public void testFault() throws Exception {
 		assumeThat(urlWsdl, urlStrReachable());
 		CreateDigestRequest request = new CreateDigestRequest();
 		final String algorithm = "FOO-256";
 		request.setAlgorithm(algorithm);
 		request.setPayload(generatePayload());
-		proxy.getDigest(getCallId(), request);
+		assertThrows(CustomFault.class, () -> proxy.getDigest(getCallId(), request));
 	}
 	
 	static CallID getCallId() {

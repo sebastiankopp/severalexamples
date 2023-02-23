@@ -3,8 +3,8 @@ package de.sebastiankopp.severalexamples.bootysoap;
 import java.net.URL;
 import java.util.Objects;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Response;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
